@@ -175,11 +175,28 @@ $$
   $$
   C-value(\alpha ) = \begin{Bmatrix}
   \log_2|\alpha| \cdot f( \alpha ) &  \alpha  未必嵌套在其他候选词中  \\ 
-  \log_2|\alpha| \cdot (f( \alpha ) - \frac{1}{P(T_a)}\sum_{a \varepsilon T_a} f(a)  ) &    其他
+  \log_2|\alpha| \cdot (f( \alpha ) - \frac{1}{P(T_a)}\sum_{\beta \varepsilon T_a} f(\beta)  ) &    其他
   \end{Bmatrix}
   $$
 
-  ​	其中 $\alpha = \alpha_1 \alpha_2 \alpha_3 ....\alpha_n$ 是候选词; $｜\alpha|$ 表示长度;$f(\alpha)$ 表示 $\alpha$ 的词频；$T_{\alpha}$ 表示包含 $\alpha$ 的候选词集，$\alpha$ 表示 $T_\alpha$ 中任意包含 $\alpha$ 的候选词;$f(\alpha)$ 表示 $\alpha$ 的词频， $P(T_\alpha)$ 表示包含 $\alpha$ 的候选词总数;
+  ​	其中 $\alpha = \alpha_1 \alpha_2 \alpha_3 ....\alpha_n$ 是候选词; $｜\alpha|$ 表示长度;$f(\alpha)$ 表示 $\alpha$ 的词频；$T_{\alpha}$ 表示包含 $\alpha$ 的候选词集，$\beta$ 表示 $T_\alpha$ 中任意包含 $\alpha$ 的候选词;$f(\beta)$ 表示 $\beta$ 的词频， $P(T_\alpha)$ 表示包含 $\alpha$ 的候选词总数;
+
+  > 公式的计算分为两种情况：
+  > 首先，C-value方法是基于词串a的词频的。对于a的c-value的值计算，分为两种情况：
+  > （1）a 不是嵌套串
+  >           c-value的值就取决于a的频数和词串a的长度。算法认为，词串的字数对于词串的c-value  值起促进作用，换言之，词串越长，是术语的可能性就越大。
+  > （2）a是嵌套串
+  > 公式中 $\sum_{b \varepsilon T_a} f(b)$
+  >
+  > ​     表示的是包含a的长串b的词频，例如，a是”石油”，那么，b可能是“中石油”、”石油科技大学”，”西南石油”，”石油天然气”等等包含a的词串。该参数对词串的作用是消极的。即可以认为，一个词串a，若嵌套其的词串出现的频数较高，则a是术语的可能性就越小。例如，a是”石油”，那么f(b)为包含a的候选串”中石油”，f(b)出现的频数越高，表明f(b)是一个术语的可能性就越大，则a本身是一个术语的可能性就越小。
+  >
+  >    (Ta)表示的是所有含有词串a 的集合，例如，a是”石油”，那么，(Ta)就是“中石油”、”石油科技大学”，”西南石油”，”石油天然气”等等包含a的词串的集合。该参数对词串的作用是积极的。 P(Ta)表示(Ta)的个数，次数应该是4。(Ta)表征了a的独立性，若包含一个词串的集合个数越多，表明a在多个词中都出现过，则认为a有较强的独立性，更可能是一个术语。
+  >
+  > ​     总之，（1）一个词串a，若嵌套a的某个词串b出现的频数较高，则b是术语的可能性就较大，a是术语可能性就较小。（2）嵌套a的词串组成的集合越大，表明a在多个词串中以不同的形式出现，a的独立性就越高，越可能是术语。所以第一个参数对c-value的值起消极作用，第二个参数起积极作用。
+  >
+  > 另外还有一种 D-Value方法是一种基于术语词频[分布变化统计，](https://www.jianshu.com/p/5395b09915bf?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)
+  >
+  > 
 
   + NC-value
     $$
